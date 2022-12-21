@@ -1,18 +1,9 @@
-import classNames from 'classnames';
 import { useEffect } from 'react';
-import styles from './Layout.module.css';
+import Header from './Header';
+import Footer from './Footer';
+import { getGlobalData } from '../utils/global-data';
 
-export function GradientBackground({ variant, className }) {
-  const classes = classNames(
-    {
-      [styles.colorBackground]: variant === 'large',
-      [styles.colorBackgroundBottom]: variant === 'small',
-    },
-    className
-  );
-
-  return <div className={classes} />;
-}
+const { githubUrl, footerText } = getGlobalData();
 
 export default function Layout({ children }) {
   const setAppTheme = () => {
@@ -50,10 +41,10 @@ export default function Layout({ children }) {
   }, []);
 
   return (
-    <div className="relative pb-24 overflow-hidden">
-      <div className="flex flex-col items-center max-w-2xl w-full mx-auto">
-        {children}
-      </div>
-    </div>
+    <>
+      <Header githubUrl={githubUrl} />
+      {children}
+      <Footer copyrightText={footerText} />
+    </>
   );
 }
