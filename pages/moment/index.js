@@ -15,7 +15,6 @@ export default function Index({ moments }) {
             <div className='bg-white shadow-md md:shadow-xl overflow-hidden rounded-lg flex flex-col'>
               <Image layout="responsive" src={filepath} width={WIDTH} height={scaledHeight} alt={name} />
               <div className='p-5 flex flex-col gap-y-3'>
-                <span>{name}</span>
                 <span className='text-gray-400 text-sm'>{update}</span>
               </div>
             </div>
