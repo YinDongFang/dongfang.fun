@@ -1,0 +1,62 @@
+---
+title: CSS Specification (Chpater 11) - Visual Effects
+description: "Master CSS: Deep dive into CSS specifications"
+reference: https://www.w3.org/TR/CSS2/visufx.html
+date: 2022/12/27
+tags: CSS
+---
+
+# 视觉效果
+
+> 本章概要：主要介绍`overflow`, `clip`（已弃用）, `visibility`三个属性
+
+> 常考知识点：
+- `visibility: hidden`和`display: none`的区别
+- 隐藏元素的方式有哪些
+
+## 溢出和裁剪
+
+一般情况下元素的内容会被限制在元素盒子内。某些情况下盒子会`溢出`，也就是盒子部分或者全部内容位于盒子外部。
+当存在`溢出`时，`overflow`属性指定了一个盒子是否应该被裁剪或者是通过滚动来访问
+
+## `overflow`
+
+- visible: 元素内容不被裁减，可能会渲染在盒子外
+- hidden: 溢出内容会被裁剪，但不会提供滚动条访问
+- scroll: 溢出内容会被裁剪，但可以通过滚动条访问。即使不存在溢出内容也会显示滚动条
+- auto: 存在溢出内容时裁剪并提供滚动条，否则不展示滚动条
+
+## `clip`（已弃用）
+
+参考：https://developer.mozilla.org/zh-CN/docs/Web/CSS/clip
+
+新的替代属性：`clip-path`，参考：https://developer.mozilla.org/zh-CN/docs/Web/CSS/clip-path
+
+## `visibility`
+
+该属性指定元素盒是否会被渲染，即使不被渲染（不可见）的元素盒也会影响布局
+
+- visible: 元素可见
+- hidden: 元素不可见，完全透明不渲染任何内容，但仍然影响布局。不响应绑定的监听事件
+- collapse: 主要用于表格中
+
+# QAs
+
+## `display: none`与`visibility: hidden`的区别
+
+`display: none`使元素完全从渲染树中移除，不渲染任何内容，不占据任何空间，也不会影响其他元素布局的计算。
+`visibility: hidden`是不渲染元素内容，也不会响应元素绑定的事件，但是会占据空间，也会影响其他元素的布局
+
+`display`是非继承属性，设置`display: none`会将元素包括其后代元素从渲染树移除，后代元素不能通过设置`display`来使元素可见。
+`visibility`是可继承属性，设置`visibility: hidden`使元素包括其后代元素隐藏，但是可以通过修改后代元素`visibility: visible`使后代元素可见
+
+`display`属性的修改会影响布局，也会引起文档的重排。
+`visibility`属性的修改不影响布局，只会引起本元素的重绘
+
+## 隐藏元素的方式有哪些
+
+- `display: none`: 元素从渲染树中移除，不渲染该元素，不占用空间，不影响布局
+- `visibility: hidden`: 使元素不可见，但仍占据空间，影响布局。不响应事件
+- `opacity: 0`: 元素透明度为0，仍占据空间，响应事件
+- `transform: scale(0)`: 元素缩放为0，从而实现元素的隐藏，元素仍占据空间，但不会响应事件
+- `clip-path: inset(50%)`: 通过元素裁剪实现元素的隐藏，元素在页面中仍占据位置，但是不会响应事件
